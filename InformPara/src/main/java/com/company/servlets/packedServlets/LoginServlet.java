@@ -16,16 +16,10 @@ import java.sql.Statement;
 public class LoginServlet extends HttpServlet {
 
     @Override
-    public void init() throws ServletException {
-
-    }
-
-    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getSession().setMaxInactiveInterval(60*60*24);
-        req.getSession().setAttribute("hide","");
-        req.getSession().setAttribute("browser","");
-        req.getSession().setAttribute("Error_data","");
+        req.getSession().setMaxInactiveInterval(60 * 60 * 24);
+        req.getSession().setAttribute("hide", "");
+        req.getSession().setAttribute("browser", "");
         req.getRequestDispatcher("hello.jsp").forward(req, resp);
     }
 

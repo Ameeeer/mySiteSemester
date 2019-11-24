@@ -21,18 +21,18 @@ public class AuthServlet extends HttpServlet {
         if (email.trim().equals("") || password.trim().equals("")) {
             req.getSession().setAttribute("Error_data", "<label style=\"color: red;\">Email or password incorrect</label>");
             getServletContext().getRequestDispatcher("/hello.jsp").forward(req, resp);
-            req.getSession().setAttribute("Error_data", "");
+            req.getSession().removeAttribute("Error_data");
         } else {
-            User user = new User(email, password);
+            User user = User.newBuilder().setEmail(email).setPassword(password).build();
             try {
                 User userOnline = authService.authoriseUserSetOnline(user);
-                if (userOnline!=null) {
+                if (userOnline != null) {
                     req.getSession().setAttribute("UserNameProfile", userOnline.getLogin());
                     resp.sendRedirect("/profile");
                 } else {
                     req.getSession().setAttribute("Error_data", "<label style=\"color: red;\">Email or password incorrect</label>");
-                    req.getSession().setAttribute("emailErrored",email);
-                    getServletContext().getRequestDispatcher(getServletContext().getContextPath()+"/hello.jsp").forward(req, resp);
+                    req.getSession().setAttribute("emailErrored", email);
+                    getServletContext().getRequestDispatcher(getServletContext().getContextPath() + "/hello.jsp").forward(req, resp);
                     req.getSession().removeAttribute("Error_data");
                     req.getSession().removeAttribute("emailErrored");
                 }

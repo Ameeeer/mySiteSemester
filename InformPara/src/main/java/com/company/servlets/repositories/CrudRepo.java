@@ -6,5 +6,5 @@ import java.sql.SQLException;
 
 public interface CrudRepo<T>{
     boolean save(User user) throws SQLException;
-    boolean checkUser (User user);
+    boolean readUser (User user);
 }

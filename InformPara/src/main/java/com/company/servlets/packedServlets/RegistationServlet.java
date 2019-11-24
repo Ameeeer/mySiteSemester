@@ -24,7 +24,7 @@ public class RegistationServlet extends HttpServlet {
         String password = req.getParameter("Password");
         String country = req.getParameter("Country");
         String userInfo = req.getParameter("Info");
-        User newuser = new User(email, login, password, country, userInfo);
+        User newuser = User.newBuilder().setEmail(email).setLogin(login).setPassword(password).setCountry(country).setInfo(userInfo).build();
         AuthCheck authCheck = new AuthCheck();
         RegistrateService registrateService = new RegistrateService();
         if (authCheck.checkEmail(newuser)) {
@@ -43,9 +43,6 @@ public class RegistationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getSession().setAttribute("hide","");
-
-        System.out.println(req.getHeader("User-Agent"));
-        System.out.println(req.getHeader("User-Agent").indexOf("Intel"));
         req.getRequestDispatcher("registrationpage.jsp").forward(req, resp);
     }
 }

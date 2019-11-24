@@ -15,25 +15,27 @@ public class UsersRepoIMLP implements UsersRepository {
         this.connection = connection;
     }
 
-    private RowMapper<User> userRowMapper = resultSet -> new User(
-            resultSet.getString("email"),
-            resultSet.getString("login"),
-            resultSet.getString("password")
-    );
-    private RowMapper<User> userEmailUniqueCheck = resultSet -> new User(
-            resultSet.getString("email")
-    );
-    private RowMapper<User> userAuthCheck = resultSet -> new User(
-            resultSet.getString("email"),
-            resultSet.getString("password")
-    );
-    private RowMapper<User> rowMapperWithAllInfo = resultSet -> new User(
-            resultSet.getString("email"),
-            resultSet.getString("login"),
-            resultSet.getString("password"),
-            resultSet.getString("country"),
-            resultSet.getString("infoaboutuser")
-    );
+    private RowMapper<User> userRowMapper =
+            resultSet -> User.newBuilder().setEmail(resultSet.getString("email")).setLogin(resultSet.getString("login")).setPassword(resultSet.getString("password")).build();
+
+    //            resultSet.getString("email"),
+//            resultSet.getString("login"),
+//            resultSet.getString("password")
+//    );
+    private RowMapper<User> userEmailUniqueCheck = resultSet -> User.newBuilder().setEmail(resultSet.getString("email")).build();
+//            resultSet.getString("email")
+//    );
+    private RowMapper<User> userAuthCheck = resultSet -> User.newBuilder().setEmail(resultSet.getString("email")).setPassword(resultSet.getString("password")).build();
+//            resultSet.getString("email"),
+//            resultSet.getString("password")
+//    );
+    private RowMapper<User> rowMapperWithAllInfo = resultSet -> User.newBuilder().setEmail(resultSet.getString("email")).setLogin(resultSet.getString("login")).setPassword(resultSet.getString("password")).setCountry(resultSet.getString("country")).setInfo(resultSet.getString("infoaboutuser")).build();
+//            resultSet.getString("email"),
+//            resultSet.getString("login"),
+//            resultSet.getString("password"),
+//            resultSet.getString("country"),
+//            resultSet.getString("infoaboutuser")
+//    );
 //    private RowMapper<User> userRole = resultSet -> new User(
 //            resultSet.getString("email"),
 //            resultSet.getString("email"),
@@ -50,70 +52,77 @@ public class UsersRepoIMLP implements UsersRepository {
             preparedStatement.setString(3, user.getPassword());
             preparedStatement.setString(4, user.getCountry());
             preparedStatement.setString(5, user.getInfo());
-            boolean ret = preparedStatement.execute();
+            int ret = preparedStatement.executeUpdate();
             System.out.println(ret);
-            return ret;
+            if (ret < 5){
+                return false;
+            }else {
+                return true;
+            }
         } catch (SQLException e) {
-            return true;
+            throw new IllegalArgumentException("Cannot add user");
+            // TODO: 24.11.2019 add logger to insert user on db
         }
     }
 
     @Override
-    public boolean checkUser(User user) {
+    public boolean readUser(User user) {
         String sqlQ = "SELECT mysiteusers.email from mysiteusers where email = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQ)) {
             preparedStatement.setString(1, user.getEmail());
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 User user1 = userEmailUniqueCheck.mapRow(resultSet);
-                if ((user1 != null)) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return true;
+//                if ((user1 != null)) {
+//                    return true;
+//                } else {
+//                    return false;
+//                }
+            }else {
+             return false;
             }
         } catch (SQLException e) {
-            return false;
+            throw new IllegalArgumentException("Cannot connect to db");
         }
-        return false;
     }
-
     public void update(User user) {
 
     }
+
     @Override
     public User authoriseUser(User user) throws SQLException {
-        String sql = "select email,login,password,country,infoaboutuser,userrole from mysiteusers where email = ? and password = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-            preparedStatement.setString(1,user.getEmail());
-            preparedStatement.setString(2,user.getPassword());
+        String sql = "select email,login,password,country,infoaboutuser,userrole from mysiteusers where email = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, user.getEmail());
+            preparedStatement.setString(2, user.getPassword());
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()){
+            if (resultSet.next()) {
                 User authUser = rowMapperWithAllInfo.mapRow(resultSet);
                 return authUser;
-            }else {
+            } else {
                 return null;
             }
         } catch (SQLException e) {
             throw new SQLException("Unbelivable situation or db crashed");
         }
     }
+
     @Override
     public boolean authentificateUser(User user) throws SQLException {
-        String sql = "select email,password from mysiteusers where email = ? and password = ?";
+        String sql = "select email,password from mysiteusers where email = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1,user.getEmail());
-            preparedStatement.setString(2,user.getPassword());
+            preparedStatement.setString(1, user.getEmail());
+            preparedStatement.setString(2, user.getPassword());
             ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()){
+            if (rs.next()) {
                 User checkableUser = userAuthCheck.mapRow(rs);
-                if (checkableUser.getEmail().equals(user.getEmail())&&checkableUser.getPassword().equals(user.getPassword())){
+                if (checkableUser.getEmail().equals(user.getEmail()) && checkableUser.getPassword().equals(user.getPassword())) {
                     return true;
-                }
-                else {
+                } else {
                     return false;
                 }
-            }else {
+            } else {
                 return false;
             }
         } catch (SQLException e) {

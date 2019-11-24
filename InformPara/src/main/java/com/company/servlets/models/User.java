@@ -9,92 +9,90 @@ public class User {
     private String country;
     private String info;
     private String status;
-    public User(String email, String login, String password) {
-        this.email = email;
-        this.login = login;
-        this.password = password;
+
+    private User() {
     }
 
-    public String getStatus() {
-        return status;
+    public Integer getId() {
+        return id;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public String getEmail() {
+        return email;
     }
 
-    public User(String email) {
+    public String getLogin() {
+        return login;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getRole() {
         return role;
     }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public String getCountry() {
         return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 
     public String getInfo() {
         return info;
     }
 
-    public void setInfo(String info) {
-        this.info = info;
+    public String getStatus() {
+        return status;
     }
-
-    public User(String email, String login, String password, String country, String info) {
-        this.email = email;
-        this.login = login;
-        this.password = password;
-        this.country = country;
-        this.info = info;
+    public static Builder newBuilder(){
+        return new User().new Builder();
     }
+    public class Builder {
+        private Builder() {
 
-    public User() {
-    }
+        }
 
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
+        public Builder setId(Integer id) {
+            User.this.id = id;
+            return this;
+        }
 
-    public Integer getId() {
-        return this.id;
-    }
+        public Builder setEmail(String email) {
+            User.this.email = email;
+            return this;
+        }
 
-    public void setId( Integer id) {
-        this.id = id;
-    }
+        public Builder setLogin(String login) {
+            User.this.login = login;
+            return this;
+        }
 
-    public String getEmail() {
-        return this.email;
-    }
+        public Builder setPassword(String password) {
+            User.this.password = password;
+            return this;
+        }
 
-    public void setEmail( String email) {
-        this.email = email;
-    }
+        public Builder setRole(String role) {
+            User.this.role = role;
+            return this;
+        }
 
-    public String getLogin() {
-        return this.login;
-    }
+        public Builder setCountry(String country) {
+            User.this.country = country;
+            return this;
+        }
 
-    public void setLogin( String login) {
-        this.login = login;
-    }
+        public Builder setInfo(String info) {
+            User.this.info = info;
+            return this;
+        }
 
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword( String password) {
-        this.password = password;
+        public Builder setStatus(String status) {
+            User.this.status = status;
+            return this;
+        }
+        public User build(){
+            return User.this;
+        }
     }
 }
