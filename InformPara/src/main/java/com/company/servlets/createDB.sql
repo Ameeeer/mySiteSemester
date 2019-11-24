@@ -13,5 +13,5 @@ minvalue 1
 cache 1
 increment 1;
 alter table only mySiteUsers alter column id set default nextval('id_seq'::regclass);
-select * from mySiteUsers;
+select Email,Login,Password from mySiteUsers order by Login;
 delete from mySiteUsers where id = 1

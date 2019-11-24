@@ -10,9 +10,10 @@
 
 #controlPanel_1{
     top: 50%;
-    margin-top: 20em;
+    margin-top: 15em;
     text-align: center;
     margin-left: 6em;
+    position: relative;
 }
 #controlPanel_2{
     top: 50%;
@@ -37,6 +38,9 @@ body {
     margin-left: 4.9em;
     margin-right: 0.8em;
     margin-bottom: 56em;
+}
+.div_correcter{
+    margin-bottom: 4em;
 }
 
 .form-group {

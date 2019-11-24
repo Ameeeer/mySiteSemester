@@ -8,11 +8,19 @@ public class User {
     private String role;
     private String country;
     private String info;
-
+    private String status;
     public User(String email, String login, String password) {
         this.email = email;
         this.login = login;
         this.password = password;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public User(String email) {

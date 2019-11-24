@@ -1,4 +1,4 @@
-package com.company.servlets;
+package com.company.servlets.packedServlets;
 
 import com.company.servlets.models.User;
 import com.company.servlets.repositories.UsersRepoIMLP;
@@ -36,13 +36,16 @@ public class RegistationServlet extends HttpServlet {
             }
         } else {
             req.getSession().setAttribute("hide","hide");
-            resp.sendRedirect("/registration");
+            resp.sendRedirect(getServletContext().getContextPath()+"/registration");
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getSession().setAttribute("hide","");
+
+        System.out.println(req.getHeader("User-Agent"));
+        System.out.println(req.getHeader("User-Agent").indexOf("Intel"));
         req.getRequestDispatcher("registrationpage.jsp").forward(req, resp);
     }
 }

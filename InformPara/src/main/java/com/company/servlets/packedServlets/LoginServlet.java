@@ -1,4 +1,6 @@
-package com.company.servlets;
+package com.company.servlets.packedServlets;
+
+import com.company.servlets.ConnectionDB;
 
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
@@ -12,25 +14,18 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class LoginServlet extends HttpServlet {
-    ConnectionDB connectionDB = new ConnectionDB();
 
     @Override
     public void init() throws ServletException {
-        try {
-            this.connectionDB = (ConnectionDB) connectionDB.getConnetion();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (NamingException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getSession().setMaxInactiveInterval(60*60*24);
         req.getSession().setAttribute("hide","");
+        req.getSession().setAttribute("browser","");
+        req.getSession().setAttribute("Error_data","");
         req.getRequestDispatcher("hello.jsp").forward(req, resp);
     }
 

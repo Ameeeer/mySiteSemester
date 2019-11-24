@@ -15,4 +15,8 @@ public class AuthCheck {
         matcher = pattern.matcher(user.getEmail());
         return matcher.matches();
     }
+    public boolean checkPassword(User user){
+
+        return false;
+    }
 }
