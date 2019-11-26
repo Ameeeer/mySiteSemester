@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>InnerPage</title>
-
     <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
     <link rel="stylesheet" href="css/main.css" type="text/css">
     <script src="js/bootstrap.js" type="text/javascript"></script>
@@ -23,8 +22,7 @@
         }
     </script>
 </head>
-<body class="mainPage"
-      onload="<%=(session.getAttribute("browser")!=null && session.getAttribute("browser").equals("do"))? "open_window()":""%>">
+<body class="mainPage">
 <div id="controlPanel_1">
     <div id="">
         <div class="form-group div_correcter">
@@ -50,12 +48,6 @@
                     <input type="submit" value="Registration" id="signUp"
                            class="rounded-top rounded-bottom btn btn-outline-success registrateButton">
                 </div>
-            </form>
-            <form action="/sortList" method="get">
-                <input value="Cookie Sort" class="rounded-top rounded-bottom btn btn-outline-success" type="submit">
-            </form>
-            <form action="/sortListServlet" method="get" style="margin-top:-2.4em; margin-right: 16em">
-                <input value="Session Sort" class="rounded-top rounded-bottom btn btn-outline-success" type="submit">
             </form>
         </div>
     </div>

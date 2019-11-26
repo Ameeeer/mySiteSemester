@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<html>
+<head lang="en">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
     <meta charset="UTF-8">
     <title>Registration</title>
-    <link rel="stylesheet" href="css/main.css" type="text/css">
-    <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css" type="text/css">
     <script>
         var checkPasswordMatch = function () {
             if (document.getElementById('PasswordOnRegistration').value == document.getElementById('PasswordRepeat').value) {
@@ -21,7 +21,6 @@
             });
         }
     </script>
-    <%@ page contentType="text/html;charset=utf-8" %>
 </head>
 <body>
 <div id="controlPanel_2">

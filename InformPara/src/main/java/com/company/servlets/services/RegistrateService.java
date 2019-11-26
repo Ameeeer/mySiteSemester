@@ -23,7 +23,7 @@ public class RegistrateService {
                 return true;
             }
         } catch (SQLException | ClassNotFoundException | NamingException e) {
-            return true;
+            throw new IllegalArgumentException("Cannot registrate user");
         }
     }
 }

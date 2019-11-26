@@ -28,7 +28,7 @@ public class UserRepoService {
             List<User> list = usersRepository.getUsersOrderByLogin();
             return list;
         } catch (SQLException | NamingException | ClassNotFoundException e) {
-            throw new IllegalArgumentException("cannotConnect or not Found");
+            throw new IllegalStateException("");
         }
     }
 
@@ -42,9 +42,8 @@ public class UserRepoService {
             }else {
                 return null;
             }
-        } catch (SQLException | NamingException | ClassNotFoundException e) {
-            throw new SQLException("Cannot found or bad request");
-            // TODO: 18.11.2019 Add logger 
+        } catch (NamingException | ClassNotFoundException e) {
+            throw new IllegalAccessError("Cannot connect to Db");
         }
     }
 }

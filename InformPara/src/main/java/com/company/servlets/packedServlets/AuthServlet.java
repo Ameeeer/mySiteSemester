@@ -1,7 +1,9 @@
 package com.company.servlets.packedServlets;
 
+import com.company.servlets.dto.UserDto;
 import com.company.servlets.models.User;
 import com.company.servlets.services.AuthService;
+import lombok.Builder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +13,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.logging.Logger;
-
 public class AuthServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -23,21 +24,20 @@ public class AuthServlet extends HttpServlet {
             getServletContext().getRequestDispatcher("/hello.jsp").forward(req, resp);
             req.getSession().removeAttribute("Error_data");
         } else {
-            User user = User.newBuilder().setEmail(email).setPassword(password).build();
-            try {
-                User userOnline = authService.authoriseUserSetOnline(user);
-                if (userOnline != null) {
-                    req.getSession().setAttribute("UserNameProfile", userOnline.getLogin());
-                    resp.sendRedirect("/profile");
-                } else {
-                    req.getSession().setAttribute("Error_data", "<label style=\"color: red;\">Email or password incorrect</label>");
-                    req.getSession().setAttribute("emailErrored", email);
-                    getServletContext().getRequestDispatcher(getServletContext().getContextPath() + "/hello.jsp").forward(req, resp);
-                    req.getSession().removeAttribute("Error_data");
-                    req.getSession().removeAttribute("emailErrored");
-                }
-            } catch (SQLException e) {
-                // TODO: 18.11.2019 Add logger on this place and his childs 
+            User user = User.builder().email(email).password(password).build();
+//            ().setEmail(email).setPassword(password).build();
+            User userOnline = authService.authoriseUserSetOnline(user);
+            if (userOnline != null) {
+                System.out.println("heelo");
+                req.getSession().setAttribute("UserNameProfile", userOnline.getLogin());
+                req.getSession().setAttribute("status", "online");
+                resp.sendRedirect("/profile");
+            } else {
+                req.getSession().setAttribute("Error_data", "<label style=\"color: red;\">Email or password incorrect</label>");
+                req.getSession().setAttribute("emailErrored", email);
+                getServletContext().getRequestDispatcher(getServletContext().getContextPath() + "/hello.jsp").forward(req, resp);
+                req.getSession().removeAttribute("Error_data");
+                req.getSession().removeAttribute("emailErrored");
             }
         }
     }

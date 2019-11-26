@@ -1,5 +1,7 @@
 package com.company.servlets.packedServlets;
 
+import com.company.servlets.models.User;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

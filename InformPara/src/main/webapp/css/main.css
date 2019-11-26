@@ -8,22 +8,25 @@
     background-color: snow;
 }
 
-#controlPanel_1{
+#controlPanel_1 {
     top: 50%;
     margin-top: 15em;
     text-align: center;
     margin-left: 6em;
     position: relative;
 }
-#controlPanel_2{
+
+#controlPanel_2 {
     top: 50%;
     margin-top: 2em;
     text-align: center;
     margin-left: 6em;
 }
-.controlRecize{
+
+.controlRecize {
     min-width: 15em;
 }
+
 body {
     min-width: 600px;
     min-height: 200px;
@@ -39,7 +42,8 @@ body {
     margin-right: 0.8em;
     margin-bottom: 56em;
 }
-.div_correcter{
+
+.div_correcter {
     margin-bottom: 4em;
 }
 

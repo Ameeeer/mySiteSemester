@@ -5,14 +5,14 @@
   Time: 18:51
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <script src="js/bootstrap.bundle.js"></script>
-    <script src="js/jQuery_3.4.1.js"></script>
-    <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
-    <link rel="stylesheet" href="css/main.css" type="text/css">
+    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
     <title>Profile</title>
+    <link rel="stylesheet" href="css/main.css" type="text/css">
+    <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
+    <script src="js/jQuery_3.4.1.js" type="text/javascript"></script>
+    <script src="js/bootstrap.bundle.js" type="text/javascript"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -35,14 +35,28 @@
                    aria-haspopup="true" aria-expanded="false">
                     Tops
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Top players</a>
+                <div class="dropdown-menu nav-item" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Top players
+                    </a>
                     <a class="dropdown-item" href="#">Top teams</a>
-                    <div class="dropdown-divider"></div>
+                    <%--                    <div class="dropdown-divider"></div>--%>
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link disabled" href="#">${UserNameProfile}</a>
+                <a class="nav-link disabled" href="#">Admin Panel</a>
+            </li>
+            <li class="nav-item dropdown" style="position:absolute; right: 1em">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="true">
+                    ${UserNameProfile}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="userProfileDropDown"
+                     style="right: 5em;">
+                    <a class="dropdown-item" href="#"></a>
+                    <form action="/quit" method="get">
+                        <input class="dropdown-item" type="submit" value="Quit"/>
+                    </form>
+                </div>
             </li>
         </ul>
     </div>

@@ -16,20 +16,20 @@ public class UsersRepoIMLP implements UsersRepository {
     }
 
     private RowMapper<User> userRowMapper =
-            resultSet -> User.newBuilder().setEmail(resultSet.getString("email")).setLogin(resultSet.getString("login")).setPassword(resultSet.getString("password")).build();
+            resultSet -> User.builder().email(resultSet.getString("email")).login(resultSet.getString("login")).password(resultSet.getString("password")).build();
 
     //            resultSet.getString("email"),
 //            resultSet.getString("login"),
 //            resultSet.getString("password")
 //    );
-    private RowMapper<User> userEmailUniqueCheck = resultSet -> User.newBuilder().setEmail(resultSet.getString("email")).build();
+    private RowMapper<User> userEmailUniqueCheck = resultSet -> User.builder().email(resultSet.getString("email")).build();
 //            resultSet.getString("email")
 //    );
-    private RowMapper<User> userAuthCheck = resultSet -> User.newBuilder().setEmail(resultSet.getString("email")).setPassword(resultSet.getString("password")).build();
+    private RowMapper<User> userAuthCheck = resultSet -> User.builder().email(resultSet.getString("email")).password(resultSet.getString("password")).build();
 //            resultSet.getString("email"),
 //            resultSet.getString("password")
 //    );
-    private RowMapper<User> rowMapperWithAllInfo = resultSet -> User.newBuilder().setEmail(resultSet.getString("email")).setLogin(resultSet.getString("login")).setPassword(resultSet.getString("password")).setCountry(resultSet.getString("country")).setInfo(resultSet.getString("infoaboutuser")).build();
+    private RowMapper<User> rowMapperWithAllInfo = resultSet -> User.builder().email(resultSet.getString("email")).login(resultSet.getString("login")).password(resultSet.getString("password")).country(resultSet.getString("country")).info(resultSet.getString("infoaboutuser")).build();
 //            resultSet.getString("email"),
 //            resultSet.getString("login"),
 //            resultSet.getString("password"),
@@ -91,11 +91,10 @@ public class UsersRepoIMLP implements UsersRepository {
     }
 
     @Override
-    public User authoriseUser(User user) throws SQLException {
+    public User authoriseUser(User user) {
         String sql = "select email,login,password,country,infoaboutuser,userrole from mysiteusers where email = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, user.getEmail());
-            preparedStatement.setString(2, user.getPassword());
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 User authUser = rowMapperWithAllInfo.mapRow(resultSet);
@@ -104,16 +103,15 @@ public class UsersRepoIMLP implements UsersRepository {
                 return null;
             }
         } catch (SQLException e) {
-            throw new SQLException("Unbelivable situation or db crashed");
+            throw new IllegalArgumentException("Cannot Authorise User");
         }
     }
 
     @Override
-    public boolean authentificateUser(User user) throws SQLException {
+    public boolean authentificateUser(User user) {
         String sql = "select email,password from mysiteusers where email = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, user.getEmail());
-            preparedStatement.setString(2, user.getPassword());
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
                 User checkableUser = userAuthCheck.mapRow(rs);
@@ -126,7 +124,7 @@ public class UsersRepoIMLP implements UsersRepository {
                 return false;
             }
         } catch (SQLException e) {
-            throw new SQLException("this user does'n exist");
+            throw new IllegalArgumentException("this user does'n exist");
         }
     }
 

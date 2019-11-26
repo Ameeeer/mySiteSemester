@@ -21,14 +21,6 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>UserList</servlet-name>
-        <servlet-class>com.company.servlets.packedServlets.SortServletCook</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SortByCountry</servlet-name>
-        <servlet-class>com.company.servlets.packedServlets.ServletSortByCounrty</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>UserProfile</servlet-name>
         <servlet-class>com.company.servlets.packedServlets.ProfileServlet</servlet-class>
     </servlet>
@@ -36,59 +28,17 @@
         <servlet-name>UserProfile</servlet-name>
         <url-pattern>/profile</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SortByCountry</servlet-name>
-        <url-pattern>/sortByCountry</url-pattern>
-    </servlet-mapping>
     <servlet>
-        <servlet-name>SortByLogin</servlet-name>
-        <servlet-class>com.company.servlets.packedServlets.ServletSortByLogin</servlet-class>
+        <servlet-name>WelcomeServlet</servlet-name>
+        <servlet-class>com.company.servlets.packedServlets.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>SortByLogin</servlet-name>
-        <url-pattern>/sortByLogin</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>SortServletSess</servlet-name>
-        <servlet-class>com.company.servlets.packedServlets.SortServletSession</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>SortServletSess</servlet-name>
-        <url-pattern>/sortListServlet</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>SortSessUsersByLogin</servlet-name>
-        <servlet-class>com.company.servlets.packedServlets.SortSessionByLogin</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>SortSessUsersByLogin</servlet-name>
-        <url-pattern>/sortByLoginSession</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>SortSessUsersByCounry</servlet-name>
-        <servlet-class>com.company.servlets.packedServlets.SortSessionByCountry</servlet-class>
-    </servlet>
-    <filter>
-        <filter-name>BrowserWarn</filter-name>
-        <filter-class>com.company.servlets.filters.IEFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>BrowserWarn</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    <servlet-mapping>
-        <servlet-name>SortSessUsersByCounry</servlet-name>
-        <url-pattern>/sortByCountrySession</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>UserList</servlet-name>
-        <url-pattern>/sortList</url-pattern>
+        <servlet-name>WelcomeServlet</servlet-name>
+        <url-pattern>/hello</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>hello.jsp</welcome-file>
-        <welcome-file>registration.jsp</welcome-file>
     </welcome-file-list>
-
     <resource-ref>
         <res-ref-name>jdbc/appname</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>

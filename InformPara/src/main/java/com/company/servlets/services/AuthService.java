@@ -10,20 +10,16 @@ public class AuthService {
     private String password;
     private AuthCheck authCheck;
 
-    private User authentificate(User user) throws SQLException {
-        try {
-            User checkUser = identificate(user);
-            if (checkUser != null) {
-                return checkUser;
-            } else {
-                return null;
-            }
-        } catch (SQLException e) {
-            throw new SQLException("not found this user");
+    private User authentificate(User user){
+        User checkUser = identificate(user);
+        if (checkUser != null) {
+            return checkUser;
+        } else {
+            return null;
         }
     }
 
-    private User identificate(User authUserInfo) throws SQLException {
+    private User identificate(User authUserInfo) {
         UserRepoService userRepoService = new UserRepoService();
         try {
             User user = userRepoService.getUser(authUserInfo);
@@ -33,22 +29,17 @@ public class AuthService {
                 return null;
             }
         } catch (SQLException e) {
-            throw new SQLException("cannot connect to db");
+            throw new IllegalArgumentException("cannot connect to db");
         }
     }
 
-    public User authoriseUserSetOnline(User user) throws SQLException {
-        try {
-            User nullable = null;
-            User onlineUser = authentificate(user);
-            if (onlineUser != null) {
-                onlineUser.setStatus("online");
-                return onlineUser;
-            } else {
-                return null;
-            }
-        } catch (SQLException e) {
-            throw new SQLException("this user does not exist");
+    public User authoriseUserSetOnline(User user){
+        User onlineUser = authentificate(user);
+        if (onlineUser != null) {
+            onlineUser.setStatus("online");
+            return onlineUser;
+        } else {
+            return null;
         }
     }
 }

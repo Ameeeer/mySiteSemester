@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface UsersRepository extends CrudRepo<User>{
 
-    User authoriseUser(User user) throws SQLException;
+    User authoriseUser(User user);
 
-    boolean authentificateUser(User user) throws SQLException;
+    boolean authentificateUser(User user);
 
     List<User> getUsersOrderByLogin();
 

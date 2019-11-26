@@ -24,7 +24,8 @@ public class RegistationServlet extends HttpServlet {
         String password = req.getParameter("Password");
         String country = req.getParameter("Country");
         String userInfo = req.getParameter("Info");
-        User newuser = User.newBuilder().setEmail(email).setLogin(login).setPassword(password).setCountry(country).setInfo(userInfo).build();
+        User newuser = User.builder()
+                .email(email).login(login).password(password).country(country).info(userInfo).build();
         AuthCheck authCheck = new AuthCheck();
         RegistrateService registrateService = new RegistrateService();
         if (authCheck.checkEmail(newuser)) {
@@ -32,18 +33,18 @@ public class RegistationServlet extends HttpServlet {
                 req.getRequestDispatcher("hello.jsp").forward(req, resp);
             } else {
                 req.getSession().setAttribute("hide", "hide");
-                req.getRequestDispatcher("registrationpage.jsp").forward(req,resp);
+                req.getRequestDispatcher("registrationpage.jsp").forward(req, resp);
             }
         } else {
-            req.getSession().setAttribute("hide","hide");
-            resp.sendRedirect(getServletContext().getContextPath()+"/registration");
+            req.getSession().setAttribute("hide", "hide");
+            resp.sendRedirect(getServletContext().getContextPath() + "/registration");
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getSession().setAttribute("hide","");
-        req.getRequestDispatcher("registrationpage.jsp").forward(req, resp);
+        req.getSession().setAttribute("hide", "");
+        req.getRequestDispatcher(getServletContext().getContextPath()+"/registrationpage.jsp").forward(req, resp);
     }
 }
 
