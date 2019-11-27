@@ -29,7 +29,7 @@ public class UsersRepoIMLP implements UsersRepository {
 //            resultSet.getString("email"),
 //            resultSet.getString("password")
 //    );
-    private RowMapper<User> rowMapperWithAllInfo = resultSet -> User.builder().email(resultSet.getString("email")).login(resultSet.getString("login")).password(resultSet.getString("password")).country(resultSet.getString("country")).info(resultSet.getString("infoaboutuser")).build();
+    private RowMapper<User> rowMapperWithAllInfo = resultSet -> User.builder().email(resultSet.getString("email")).login(resultSet.getString("login")).password(resultSet.getString("password")).country(resultSet.getString("country")).info(resultSet.getString("infoaboutuser")).role(resultSet.getString("userrole")).build();
 //            resultSet.getString("email"),
 //            resultSet.getString("login"),
 //            resultSet.getString("password"),
@@ -45,13 +45,14 @@ public class UsersRepoIMLP implements UsersRepository {
 //    );
 
     public boolean save(User user) {
-        String sqlQueryAddUser = "INSERT INTO mysiteusers(email,login,password,country,infoaboutuser) VALUES(?,?,?,?,?)";
+        String sqlQueryAddUser = "INSERT INTO mysiteusers(email,login,password,country,infoaboutuser,userrole) VALUES(?,?,?,?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQueryAddUser)) {
             preparedStatement.setString(1, user.getEmail());
             preparedStatement.setString(2, user.getLogin());
             preparedStatement.setString(3, user.getPassword());
             preparedStatement.setString(4, user.getCountry());
             preparedStatement.setString(5, user.getInfo());
+            preparedStatement.setString(6, user.getRole());
             int ret = preparedStatement.executeUpdate();
             System.out.println(ret);
             if (ret < 5){
@@ -98,6 +99,9 @@ public class UsersRepoIMLP implements UsersRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 User authUser = rowMapperWithAllInfo.mapRow(resultSet);
+                System.out.println(authUser.getLogin());
+                System.out.println(authUser.getRole());
+                System.out.println("rsFind");
                 return authUser;
             } else {
                 return null;

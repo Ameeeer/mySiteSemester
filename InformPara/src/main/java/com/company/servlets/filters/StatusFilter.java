@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.crypto.dsig.spec.XPathType;
 import java.io.IOException;
 
-//@WebFilter(filterName = "StatusFilter", urlPatterns = {"/","/registration"})
+@WebFilter(filterName = "StatusFilter", urlPatterns = {"/","/registration"})
 public class StatusFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -20,12 +20,9 @@ public class StatusFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
         if (req.getSession().getAttribute("status") == null) {
             req.getSession().setAttribute("status", "offline");
-            System.out.println("soososoos");
             filterChain.doFilter(servletRequest,servletResponse);
         } else if ((req.getSession().getAttribute("status").equals("online"))) {
-            System.out.println("onlineEDUSer");
-            filterChain.doFilter(req, resp);
-            ((HttpServletResponse) servletResponse).sendRedirect(req.getServletContext().getContextPath() + "/profile");
+            resp.sendRedirect(req.getContextPath()+"/profile");
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
         }

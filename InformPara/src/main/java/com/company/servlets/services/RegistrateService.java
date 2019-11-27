@@ -7,23 +7,31 @@ import com.company.servlets.repositories.UsersRepository;
 
 import javax.naming.NamingException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 public class RegistrateService {
     ConnectionDB connectionDB = new ConnectionDB();
+    private UsersRepository usersRepository;
 
     public boolean registrateUser(User newuser) {
-        UsersRepository usersRepository = null;
         try {
             usersRepository = new UsersRepoIMLP(connectionDB.getConnetion());
             boolean reg = usersRepository.save(newuser);
             if (reg) {
                 return false;
-            }else {
+            } else {
                 return true;
             }
         } catch (SQLException | ClassNotFoundException | NamingException e) {
             throw new IllegalArgumentException("Cannot registrate user");
         }
+    }
+
+    public boolean checkFields(List<String> list) {
+        for (String str : list) {
+            if (str==null) return false;
+        }
+        return true;
     }
 }

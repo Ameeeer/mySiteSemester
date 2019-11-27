@@ -10,7 +10,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class UserRepoService {
-    ConnectionDB connectionDB = new ConnectionDB();
+    private ConnectionDB connectionDB = new ConnectionDB();
+    private UsersRepository usersRepository;
 
     public List<User> getUsrsOrderedBCountry() {
         try {
@@ -39,7 +40,7 @@ public class UserRepoService {
             if (checker) {
                 User autoriseduser = usersRepository.authoriseUser(user);
                 return autoriseduser;
-            }else {
+            } else {
                 return null;
             }
         } catch (NamingException | ClassNotFoundException e) {

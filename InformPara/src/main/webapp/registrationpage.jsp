@@ -3,8 +3,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
     <meta charset="UTF-8">
     <title>Registration</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="/css/main.css" type="text/css">
+    <link rel="stylesheet" href="/css/bootstrap.css" type="text/css">
     <script>
         var checkPasswordMatch = function () {
             if (document.getElementById('PasswordOnRegistration').value == document.getElementById('PasswordRepeat').value) {
@@ -25,24 +25,24 @@
 <body>
 <div id="controlPanel_2">
     <div id="bordered">
-        <form action="/registration" method="post" id="registrationForm">
+        <form action="<%=session.getServletContext().getContextPath()%>/registration" method="post" id="registrationForm">
             <label style="color: red; margin-right: 6em" <%=session.getAttribute("hide") != null && session.getAttribute("hide").equals("hide") ? "" : "hidden"%>>Не удалось
-                зарегистрировать<br> Email введен неверно</label>
+                зарегистрировать<br> Данные не введены либо введены неверно</label>
             <div class="form-group">
                 <label>Введите Email</label><br>
                 <input type="email" name="Email" placeholder="Email"
-                       class="rounded-top rounded-bottom col-2 controlRecize" required>
+                       class="rounded-top rounded-bottom col-2 controlRecize" required value="${errEmail}">
             </div>
             <div class="form-group">
                 <label>Введите Логин</label><br>
                 <input type="text" name="Login" placeholder="Login" id="LoginOnRegistration"
-                       class="rounded-top rounded-bottom col-2 controlRecize" required>
+                       class="rounded-top rounded-bottom col-2 controlRecize" required value="${errLogin}">
             </div>
 
             <div class="form-group">
                 <label>Введите пароль</label><br>
                 <input type="text" name="Password" placeholder="Password" id="PasswordOnRegistration"
-                       class="rounded-top rounded-bottom col-2 controlRecize" required>
+                       class="rounded-top rounded-bottom col-2 controlRecize" required onkeyup="checkPasswordMatch()">
             </div>
             <div class="form-group">
                 <label>Повторите пароль</label><br>
@@ -63,13 +63,24 @@
                 </select>
             </div>
             <div class="form-group">
+                <label>Выберите роль</label><br>
+                <select required name="role">
+                    <option disabled>Выберите роль</option>
+                    <option value="simpleUser">Simple user</option>
+                    <option value="admin">Admin</option>
+                    <option value="moderator">Moderator</option>
+                    <option value="helper">Helper</option>
+                </select>
+            </div>
+            <div class="form-group">
                 <label>О себе</label><br>
                 <textarea name="Info" placeholder="Введите информацию о себе" style="min-height: 8em"
-                          class="controlRecize rounded-bottom rounded-top col-2"></textarea>
+                          class="controlRecize rounded-bottom rounded-top col-2">${errInfo}</textarea>
             </div>
             <div class="form-group" style="margin-right: 0.8em">
                 <input type="checkbox" name="LicenseCheckBox" id="LicenseCheckBox" required>
-                <label title="Лицензионное соглашение">Лицензионное соглашение</label>
+                <label title="Лицензионное соглашение" for="LicenseCheckBox">
+                    Лицензионное соглашение</label>
             </div>
             <div class="">
                 <input type="submit" name="RegistrateButton" value="Registrate"

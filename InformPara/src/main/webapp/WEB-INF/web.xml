@@ -4,41 +4,46 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-    <servlet>
-        <servlet-name>Registration</servlet-name>
-        <servlet-class>com.company.servlets.packedServlets.RegistationServlet</servlet-class>
-    </servlet>
+    <!--    <servlet>-->
+    <!--        <servlet-name>Registration</servlet-name>-->
+    <!--        <servlet-class>com.company.servlets.packedServlets.RegistationServlet</servlet-class>-->
+    <!--    </servlet>-->
+    <!--    <servlet-mapping>-->
+    <!--        <servlet-name>Registration</servlet-name>-->
+    <!--        <url-pattern>/registration</url-pattern>-->
+    <!--    </servlet-mapping>-->
+    <!--    <servlet>-->
+    <!--        <servlet-name>Login</servlet-name>-->
+    <!--        <servlet-class>com.company.servlets.packedServlets.AuthServlet</servlet-class>-->
+    <!--    </servlet>-->
+    <!--    <servlet-mapping>-->
+    <!--        <servlet-name>Login</servlet-name>-->
+    <!--        <url-pattern>/login</url-pattern>-->
+    <!--    </servlet-mapping>-->
+    <!--    <servlet>-->
+    <!--        <servlet-name>UserProfile</servlet-name>-->
+    <!--        <servlet-class>com.company.servlets.packedServlets.ProfileServlet</servlet-class>-->
+    <!--    </servlet>-->
+    <!--    <servlet-mapping>-->
+    <!--        <servlet-name>UserProfile</servlet-name>-->
+    <!--        <url-pattern>/profile</url-pattern>-->
+    <!--    </servlet-mapping>-->
+    <!--    <servlet>-->
+    <!--        <servlet-name>WelcomeServlet</servlet-name>-->
+    <!--        <servlet-class>com.company.servlets.packedServlets.LoginServlet</servlet-class>-->
+    <!--    </servlet>-->
+    <!--    <servlet-mapping>-->
+    <!--        <servlet-name>WelcomeServlet</servlet-name>-->
+    <!--        <url-pattern>/hello</url-pattern>-->
+    <!--    </servlet-mapping>-->
     <servlet-mapping>
-        <servlet-name>Registration</servlet-name>
-        <url-pattern>/registration</url-pattern>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.css</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>Login</servlet-name>
-        <servlet-class>com.company.servlets.packedServlets.AuthServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
-        <servlet-name>Login</servlet-name>
-        <url-pattern>/login</url-pattern>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.js</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>UserProfile</servlet-name>
-        <servlet-class>com.company.servlets.packedServlets.ProfileServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UserProfile</servlet-name>
-        <url-pattern>/profile</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>WelcomeServlet</servlet-name>
-        <servlet-class>com.company.servlets.packedServlets.LoginServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>WelcomeServlet</servlet-name>
-        <url-pattern>/hello</url-pattern>
-    </servlet-mapping>
-    <welcome-file-list>
-        <welcome-file>hello.jsp</welcome-file>
-    </welcome-file-list>
     <resource-ref>
         <res-ref-name>jdbc/appname</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>

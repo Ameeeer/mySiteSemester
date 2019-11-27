@@ -5,7 +5,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-//@WebFilter(filterName = "ProfileFilter(Status)", urlPatterns = {"/profile/*"})
+@WebFilter(filterName = "ProfileFilter(Status)", urlPatterns = {"/profile/*","/profile"})
 public class StatusFilterOnProfile implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -16,10 +16,14 @@ public class StatusFilterOnProfile implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
-        if (req.getSession().getAttribute("status").equals("offline")) {
-            System.out.println("offlinedUser");
-            filterChain.doFilter(req, resp);
-            ((HttpServletResponse) servletResponse).sendRedirect("/hello");
+        if (req.getSession().getAttribute("status").equals("") | req.getSession().getAttribute("status")== null | req.getSession().getAttribute("status").equals("offline")) {
+            try {
+                ((HttpServletResponse) servletResponse).sendRedirect("/hello");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else {
+            filterChain.doFilter(servletRequest,servletResponse);
         }
     }
 

@@ -9,10 +9,10 @@
 <head>
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
     <title>Profile</title>
-    <link rel="stylesheet" href="css/main.css" type="text/css">
-    <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
-    <script src="js/jQuery_3.4.1.js" type="text/javascript"></script>
-    <script src="js/bootstrap.bundle.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="/hello/css/main.css" type="text/css">
+    <link rel="stylesheet" href="/hello/css/bootstrap.css" type="text/css">
+    <script src="/hello/js/jQuery_3.4.1.js" type="text/javascript"></script>
+    <script src="/hello/js/bootstrap.bundle.js" type="text/javascript"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -43,17 +43,17 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link disabled" href="#">Admin Panel</a>
+                <a class="nav-link ${adminPanel}" href="#">Admin Panel</a>
             </li>
-            <li class="nav-item dropdown" style="position:absolute; right: 1em">
+            <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="true">
                     ${UserNameProfile}
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="userProfileDropDown"
+                <div class="dropdown-menu nav-item" aria-labelledby="navbarDropdown" id="userProfileDropDown"
                      style="right: 5em;">
                     <a class="dropdown-item" href="#"></a>
-                    <form action="/quit" method="get">
+                    <form action="<%=session.getServletContext().getContextPath()%>/quit" method="get">
                         <input class="dropdown-item" type="submit" value="Quit"/>
                     </form>
                 </div>

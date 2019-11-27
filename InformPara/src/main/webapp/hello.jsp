@@ -5,8 +5,8 @@
     <title>InnerPage</title>
     <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
     <link rel="stylesheet" href="css/main.css" type="text/css">
-    <script src="js/bootstrap.js" type="text/javascript"></script>
-    <script src="js/bootstrap.bundle.js" type="text/javascript"></script>
+    <script src="/hello/js/bootstrap.js" type="text/javascript"></script>
+    <script src="/hello/js/bootstrap.bundle.js" type="text/javascript"></script>
     <script type="text/javascript">
         function open_window(Location, w, h) //opens new window
         {
@@ -29,7 +29,7 @@
             ${Error_data}
         </div>
         <div>
-            <form action="/login" role="form" method="post" style="max-height: 92px">
+            <form action="<%=request.getContextPath()%>/login" role="form" method="post" style="max-height: 92px">
                 <div class="form-group">
                     <input type="email" id="email" name="emailToCheck" class="rounded-top rounded-bottom col-2"
                            placeholder="Email" value="${emailErrored}">
@@ -43,7 +43,7 @@
                            class="rounded-top rounded-bottom btn btn-outline-success signInButton">
                 </div>
             </form>
-            <form action="/registration" method="get" style="max-height: 100px">
+            <form action="<%=request.getContextPath()%>/registration" method="get" style="max-height: 100px">
                 <div>
                     <input type="submit" value="Registration" id="signUp"
                            class="rounded-top rounded-bottom btn btn-outline-success registrateButton">
