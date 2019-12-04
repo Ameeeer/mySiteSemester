@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
         AuthService authService = new AuthService();
         String email = req.getParameter("emailToCheck");
         String password = req.getParameter("passwordToCheck");
-        if (email.trim().equals("") || password.trim().equals("")) {
+        if (email.trim().equals("") || password.trim().equals("") ) {
             req.getSession().setAttribute("Error_data", "<label style=\"color: red;\">Email or password incorrect</label>");
             getServletContext().getRequestDispatcher("/hello.jsp").forward(req, resp);
             req.getSession().removeAttribute("Error_data");
@@ -44,9 +44,9 @@ public class LoginServlet extends HttpServlet {
             User userOnline = authService.authoriseUserSetOnline(User.builder().email(email).password(password).build());
             if (userOnline != null) {
                 req.getSession().setAttribute("UserNameProfile", userOnline.getLogin());
+                req.getSession().setAttribute("userIdProtected",userOnline.getId());
                 req.getSession().setAttribute("status", "online");
-                System.out.println(userOnline.getRole());
-                req.getSession().setAttribute("role", userOnline.getRole());
+//                req.getSession().setAttribute("role", userOnline.getRole());
                 resp.sendRedirect(req.getContextPath() + "/profile");
             } else {
                 req.getSession().setAttribute("Error_data", "<label style=\"color: red;\">Email or password incorrect</label>");

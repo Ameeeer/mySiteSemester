@@ -2,6 +2,8 @@ package com.company.servlets.models;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Builder
 public class User {
@@ -9,7 +11,7 @@ public class User {
     private String email;
     private String login;
     private String password;
-    private String role;
+    private List<String> roles;
     private String country;
     private String info;
     private String status;

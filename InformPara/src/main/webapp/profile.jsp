@@ -13,10 +13,11 @@
     <link rel="stylesheet" href="/hello/css/bootstrap.css" type="text/css">
     <script src="/hello/js/jQuery_3.4.1.js" type="text/javascript"></script>
     <script src="/hello/js/bootstrap.bundle.js" type="text/javascript"></script>
+    <script src="/hello/js/CurrentServerTime.js" type="text/javascript"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">WWW</a>
+    <a class="navbar-brand" href="<%=request.getContextPath()+"/profile"%>">WWW</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -61,5 +62,6 @@
         </ul>
     </div>
 </nav>
+<label>Current Server Time: </label><label id="currentTime" class="ti"></label>
 </body>
 </html>

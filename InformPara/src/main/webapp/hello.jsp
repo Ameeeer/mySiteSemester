@@ -31,22 +31,29 @@
         <div>
             <form action="<%=request.getContextPath()%>/login" role="form" method="post" style="max-height: 92px">
                 <div class="form-group">
+                    <label style="position: relative;
+    left: -25px;">Email</label>
                     <input type="email" id="email" name="emailToCheck" class="rounded-top rounded-bottom col-2"
                            placeholder="Email" value="${emailErrored}">
                 </div>
                 <div class="form-group">
+                    <label style="position: relative;
+    left: -2em;">Password</label>
                     <input type="password" id="password" name="passwordToCheck" class="rounded-top rounded-bottom col-2"
-                           placeholder="Password">
+                           placeholder="Password" style="left: -1em;">
                 </div>
                 <div>
                     <input type="submit" value="SignIn" id="signIn"
                            class="rounded-top rounded-bottom btn btn-outline-success signInButton">
                 </div>
             </form>
-            <form action="<%=request.getContextPath()%>/registration" method="get" style="max-height: 100px">
+            <form action="<%=request.getContextPath()%>/registration" method="get" >
                 <div>
                     <input type="submit" value="Registration" id="signUp"
-                           class="rounded-top rounded-bottom btn btn-outline-success registrateButton">
+                           class="rounded-top rounded-bottom btn btn-outline-success registrateButton" style="max-height: 40px;
+    position: relative;
+    right: -1.3em;
+    bottom: -0.5em;">
                 </div>
             </form>
         </div>

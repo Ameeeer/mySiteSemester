@@ -1,12 +1,13 @@
 <html>
 <head lang="en">
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
     <meta charset="UTF-8">
     <title>Registration</title>
-    <link rel="stylesheet" href="/css/main.css" type="text/css">
-    <link rel="stylesheet" href="/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="css/main.css" type="text/css">
+    <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
     <script>
-        var checkPasswordMatch = function () {
+        // document.addEventListener("DOMLoaded",
+        var checkPass = function () {
             if (document.getElementById('PasswordOnRegistration').value == document.getElementById('PasswordRepeat').value) {
                 document.getElementById('message').style.color = 'green';
                 document.getElementById('message').innerHTML = 'Совпадают';
@@ -19,14 +20,16 @@
             $(document).ready(function () {
                 $().keyup(checkPasswordMatch);
             });
-        }
+        };
     </script>
 </head>
 <body>
 <div id="controlPanel_2">
     <div id="bordered">
-        <form action="<%=session.getServletContext().getContextPath()%>/registration" method="post" id="registrationForm">
-            <label style="color: red; margin-right: 6em" <%=session.getAttribute("hide") != null && session.getAttribute("hide").equals("hide") ? "" : "hidden"%>>Не удалось
+        <form action="<%=session.getServletContext().getContextPath()%>/registration" method="post"
+              id="registrationForm">
+            <label style="color: red; margin-right: 6em" <%=session.getAttribute("hide") != null && session.getAttribute("hide").equals("hide") ? "" : "hidden"%>>Не
+                удалось
                 зарегистрировать<br> Данные не введены либо введены неверно</label>
             <div class="form-group">
                 <label>Введите Email</label><br>
@@ -42,13 +45,13 @@
             <div class="form-group">
                 <label>Введите пароль</label><br>
                 <input type="text" name="Password" placeholder="Password" id="PasswordOnRegistration"
-                       class="rounded-top rounded-bottom col-2 controlRecize" required onkeyup="checkPasswordMatch()">
+                       class="rounded-top rounded-bottom col-2 controlRecize" required onkeyup="checkPass()">
             </div>
             <div class="form-group">
                 <label>Повторите пароль</label><br>
                 <input type="text" name="PasswordRepeat" placeholder="Repeat Password" id="PasswordRepeat"
                        class="rounded-top rounded-bottom col-2 controlRecize" required
-                       onkeyup="checkPasswordMatch(); registrateCheck();">
+                       onkeyup="checkPass()">
                 <div>
                     <span id="message" aria-required="true"></span>
                 </div>
@@ -64,12 +67,14 @@
             </div>
             <div class="form-group">
                 <label>Выберите роль</label><br>
-                <select required name="role">
-                    <option disabled>Выберите роль</option>
-                    <option value="simpleUser">Simple user</option>
-                    <option value="admin">Admin</option>
-                    <option value="moderator">Moderator</option>
-                    <option value="helper">Helper</option>
+                <select required size="3" name="roles[]" multiple id="roleSelector">
+                    <option disabled ></option>
+                    <option value="Admin">Admin</option>
+                    <option value="simpleUser">Simple User</option>
+                    <option value="Moderator">Moderator</option>
+                    <option value="Helper">Helper</option>
+                    <option value="Jesus">Jesus</option>
+                    <option value="Lecturer">Lecturer</option>
                 </select>
             </div>
             <div class="form-group">
