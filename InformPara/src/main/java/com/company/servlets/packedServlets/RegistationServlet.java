@@ -44,7 +44,7 @@ public class RegistationServlet extends HttpServlet {
                 .email(email).login(login).password(password).country(country).info(userInfo).roles(userRoles).build();
         AuthCheck authCheck = new AuthCheck();
         if (registrateService.checkFields(list) && authCheck.checkEmail(newuser) && registrateService.registrateUser(newuser)) {
-            resp.sendRedirect("/hello");
+            resp.sendRedirect(req.getContextPath());
         } else {
             req.getServletContext().setAttribute("errEmail", email);
             req.getServletContext().setAttribute("errLogin", login);
@@ -61,10 +61,8 @@ public class RegistationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         req.getSession().setAttribute("hide", "");
         try {
-            System.out.println("reggpage");
             req.getRequestDispatcher("registrationpage.jsp").forward(req, resp);
         } catch (ServletException | IOException e) {
-            System.out.println("err");
             e.printStackTrace();
         }
     }

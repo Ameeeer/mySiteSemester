@@ -40,13 +40,12 @@ public class LoginServlet extends HttpServlet {
             getServletContext().getRequestDispatcher("/hello.jsp").forward(req, resp);
             req.getSession().removeAttribute("Error_data");
         } else {
-//            ().setEmail(email).setPassword(password).build();
             User userOnline = authService.authoriseUserSetOnline(User.builder().email(email).password(password).build());
             if (userOnline != null) {
                 req.getSession().setAttribute("UserNameProfile", userOnline.getLogin());
-                req.getSession().setAttribute("userIdProtected",userOnline.getId());
                 req.getSession().setAttribute("status", "online");
-//                req.getSession().setAttribute("role", userOnline.getRole());
+                req.getSession().setAttribute("userIdProtected",userOnline.getId());
+                req.getSession().setAttribute("userRights","not issued");
                 resp.sendRedirect(req.getContextPath() + "/profile");
             } else {
                 req.getSession().setAttribute("Error_data", "<label style=\"color: red;\">Email or password incorrect</label>");

@@ -8,12 +8,26 @@
 <html>
 <head>
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-    <title>Main</title>
-    <link rel="stylesheet" href="/hello/css/main.css" type="text/css">
-    <link rel="stylesheet" href="/hello/css/bootstrap.css" type="text/css">
-    <script src="/hello/js/jQuery_3.4.1.js" type="text/javascript"></script>
-    <script src="/hello/js/bootstrap.bundle.js" type="text/javascript"></script>
-    <script src="/hello/js/CurrentServerTime.js" type="text/javascript"></script>
+    <title>Friends</title>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/main.css" type="text/css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.css" type="text/css">
+    <script src="<%=request.getContextPath()%>/js/jQuery_3.4.1.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/js/bootstrap.bundle.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        function show() {
+            $.ajax({
+                url: '../CurrentTime',
+                success: function (resp) {
+                    $('#currentTime').text("  " + resp)
+                }
+            })
+        }
+
+        $(document).ready(
+            show(),
+            setInterval('show()', 1000)
+        );
+    </script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">

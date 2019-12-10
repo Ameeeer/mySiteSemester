@@ -1,12 +1,15 @@
 package com.company.servlets.dto;
 
 import lombok.Builder;
+import lombok.Data;
 
+@Data
 @Builder
 public class UserDto implements DtoInterface {
     private String email;
+    private String login;
+    private String password;
     private String role;
-    private Long id;
     private String infoAboutUser;
     private String country;
     private String status;

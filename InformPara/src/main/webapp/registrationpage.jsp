@@ -5,9 +5,10 @@
     <title>Registration</title>
     <link rel="stylesheet" href="css/main.css" type="text/css">
     <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
+    <script src="js/bootstrap.js" type="application/javascript"></script>
     <script>
         // document.addEventListener("DOMLoaded",
-        var checkPass = function () {
+        let checkPass = function () {
             if (document.getElementById('PasswordOnRegistration').value == document.getElementById('PasswordRepeat').value) {
                 document.getElementById('message').style.color = 'green';
                 document.getElementById('message').innerHTML = 'Совпадают';
@@ -68,7 +69,7 @@
             <div class="form-group">
                 <label>Выберите роль</label><br>
                 <select required size="3" name="roles[]" multiple id="roleSelector">
-                    <option disabled ></option>
+                    <option disabled >Выберите роли/роль</option>
                     <option value="Admin">Admin</option>
                     <option value="simpleUser">Simple User</option>
                     <option value="Moderator">Moderator</option>

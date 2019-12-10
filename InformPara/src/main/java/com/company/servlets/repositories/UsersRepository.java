@@ -21,4 +21,5 @@ public interface UsersRepository extends CrudRepo<User>{
     List<User> getUsersOrderByLogin();
 
     List<User> getUsersOrderByCountry();
+    List<User> getAllUsers();
 }

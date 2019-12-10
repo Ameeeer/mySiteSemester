@@ -1,5 +1,6 @@
 package com.company.servlets.repositories;
 
+import com.company.servlets.dto.UserDto;
 import com.company.servlets.models.User;
 
 import java.sql.*;
@@ -14,8 +15,8 @@ public class UsersRepoIMLP implements UsersRepository {
         this.connection = connection;
     }
 
-    private RowMapper<User> userRowMapper =
-            resultSet -> User.builder().email(resultSet.getString("email")).login(resultSet.getString("login")).password(resultSet.getString("password")).build();
+    private RowMapper<UserDto> userRowMapper =
+            resultSet -> UserDto.builder().email(resultSet.getString("email")).login(resultSet.getString("login")).country(resultSet.getString("country")).infoAboutUser(resultSet.getString("infoaboutuser")).build();
 
     //            resultSet.getString("email"),
 //            resultSet.getString("login"),
@@ -29,6 +30,7 @@ public class UsersRepoIMLP implements UsersRepository {
 //            resultSet.getString("password")
 //    );
     private RowMapper<User> rowMapperWithAllInfo = resultSet -> User.builder().id(resultSet.getInt("id")).email(resultSet.getString("email")).login(resultSet.getString("login")).password(resultSet.getString("password")).country(resultSet.getString("country")).info(resultSet.getString("infoaboutuser")).build();
+    private RowMapper<User> minInfoAboutUserRowMapper = resultSet -> User.builder().login(resultSet.getString("login")).country(resultSet.getString("country")).info(resultSet.getString("infoaboutuser")).build();
 //            resultSet.getString("email"),
 //            resultSet.getString("login"),
 //            resultSet.getString("password"),
@@ -65,36 +67,49 @@ public class UsersRepoIMLP implements UsersRepository {
     }
 
     @Override
-    public boolean readUser(User user) {
-        return false;
+    public UserDto readUser(int id) {
+
+        String sqlReadUser = "select email,login,country,infoaboutuser from mysiteusers where id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlReadUser)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                UserDto userDto = userRowMapper.mapRow(resultSet);
+                return userDto;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new IllegalArgumentException();// TODO: 08.12.2019 Add logger
+        }
     }
 
     @Override
     public boolean insertUserRoles(Integer userId, Integer roleId) {
         String sql = "insert into usrs_with_roles(userid, roleid) VALUES (?,?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-            preparedStatement.setInt(1,userId);
-            preparedStatement.setInt(2,roleId);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, roleId);
             int checkLine = preparedStatement.executeUpdate();
-            if (checkLine<2){
+            if (checkLine < 2) {
                 return false;
-            }
-            else return true;
+            } else return true;
         } catch (SQLException e) {
             throw new IllegalArgumentException("Insert Error");
         }
     }
+
     @Override
     public Integer getIdRole(String roleName) {
         String sqlQuery = "select id from roles where rolename = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
-            preparedStatement.setString(1,roleName);
+            preparedStatement.setString(1, roleName);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()){
+            if (resultSet.next()) {
                 int x = resultSet.getInt(1);
                 System.out.println(x);
                 return x;
-            }else return null;
+            } else return null;
         } catch (SQLException e) {
             throw new IllegalArgumentException("This role doesn't exist");
         }
@@ -122,8 +137,36 @@ public class UsersRepoIMLP implements UsersRepository {
         }
     }
 
-    public void update(User user) {
+    @Override
+    public boolean update(UserDto user, int id) {
+        String sqlUpdate = "update mysiteusers set email = ?, login = ?, country = ?, infoaboutuser = ? where id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlUpdate)) {
+            UserDto dto = readUser(id);
+            boolean ch = dto.equals(user);
+            if (ch) {
+                return false;
+            } else {
+                preparedStatement.setString(1, user.getEmail());
+                preparedStatement.setString(2, user.getLogin());
+                preparedStatement.setString(3, user.getCountry());
+                preparedStatement.setString(4, user.getInfoAboutUser());
+                preparedStatement.setInt(5, id);
+                int check = preparedStatement.executeUpdate();
+                System.out.println(check);
+                if (check == 1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException();
+        }
+    }
 
+    @Override
+    public boolean delete(User user) {
+        return false;
     }
 
     @Override
@@ -142,14 +185,15 @@ public class UsersRepoIMLP implements UsersRepository {
             throw new IllegalArgumentException("Cannot Authorise User");
         }
     }
+
     @Override
-    public List<String> getUserRoles(Integer id){
+    public List<String> getUserRoles(Integer id) {
         String sql = "select rolename from roles join usrs_with_roles uwr on roles.id = uwr.roleID where userID = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-            preparedStatement.setInt(1,id);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             List<String> roles = new ArrayList<>();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 roles.add(resultSet.getString("rolename"));
             }
             return roles;
@@ -157,6 +201,7 @@ public class UsersRepoIMLP implements UsersRepository {
             throw new IllegalArgumentException("Table exc");
         }
     }
+
     @Override
     public boolean authentificateUser(User user) {
         String sql = "select email,password from mysiteusers where email = ?";
@@ -185,8 +230,8 @@ public class UsersRepoIMLP implements UsersRepository {
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                User user = userRowMapper.mapRow(resultSet);
-                list.add(user);
+//                User user = userRowMapper.mapRow(resultSet);
+//                list.add(user);
             }
         } catch (SQLException e) {
             throw new IllegalArgumentException("NotFound");
@@ -197,16 +242,37 @@ public class UsersRepoIMLP implements UsersRepository {
     @Override
     public List<User> getUsersOrderByCountry() {
         list = new ArrayList<>();
-        String sql = "select email,login,password from mysiteusers order by country";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        String sqlQ = "select email,login,password from mysiteusers order by country";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQ)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                User user = userRowMapper.mapRow(resultSet);
-                list.add(user);
+//                User user = userRowMapper.mapRow(resultSet);
+//                list.add(user);
             }
         } catch (SQLException e) {
             throw new IllegalArgumentException("NotFound");
         }
         return list;
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        list = new ArrayList<>();
+        String sql = "select login,country,infoaboutuser from mysiteusers";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                User user = minInfoAboutUserRowMapper.mapRow(resultSet);
+                list.add(user);
+            }
+            return list;
+        } catch (SQLException e) {
+            try {
+                throw new IllegalAccessException("Cannot connect to DB");
+            } catch (IllegalAccessException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return null;
     }
 }

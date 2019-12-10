@@ -8,7 +8,7 @@
 <html>
 <head>
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-    <title>Main</title>
+    <title>Players</title>
     <link rel="stylesheet" href="/hello/css/main.css" type="text/css">
     <link rel="stylesheet" href="/hello/css/bootstrap.css" type="text/css">
     <script src="/hello/js/jQuery_3.4.1.js" type="text/javascript"></script>

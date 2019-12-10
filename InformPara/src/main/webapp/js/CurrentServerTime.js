@@ -1,6 +1,6 @@
 function show() {
     $.ajax({
-        url: 'CurrentTime',
+        url: '../CurrentTime',
         success: function (resp) {
             $('#currentTime').text("  " + resp)
         }
@@ -9,5 +9,5 @@ function show() {
 
 $(document).ready(
     show(),
-setInterval('show()', 1000)
+    setInterval('show()', 1000)
 );

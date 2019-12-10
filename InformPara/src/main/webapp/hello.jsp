@@ -10,9 +10,9 @@
     <script type="text/javascript">
         function open_window(Location, w, h) //opens new window
         {
-            var options = "width=" + 400 + ",height=" + 400;
+            let options = "width=" + 400 + ",height=" + 400;
             options += ",menubar=no,location=no,resizable,scrollbars,top=500,left=500";
-            var newwin = window.open("miVamNeRadi.html", 'newWin', options);
+            let newwin = window.open("miVamNeRadi.html", 'newWin', options);
             // if (newwin == null)
             // {
             //     // The popup got blocked, notify the user
@@ -24,6 +24,10 @@
 </head>
 <body class="mainPage">
 <div id="controlPanel_1">
+    <button class="colorChanges" value="red">RED</button>
+    <button class="colorChanges" value="green">GREEN</button>
+    <button class="colorChanges" value="blue">BLUE</button>
+    <button class="colorChanges" value="snow">snow</button>
     <div id="">
         <div class="form-group div_correcter">
             ${Error_data}
@@ -47,7 +51,7 @@
                            class="rounded-top rounded-bottom btn btn-outline-success signInButton">
                 </div>
             </form>
-            <form action="<%=request.getContextPath()%>/registration" method="get" >
+            <form action="<%=request.getContextPath()%>/registration" method="get">
                 <div>
                     <input type="submit" value="Registration" id="signUp"
                            class="rounded-top rounded-bottom btn btn-outline-success registrateButton" style="max-height: 40px;
@@ -59,5 +63,14 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    let elem = document.getElementsByClassName("colorChanges");
+    for (let i = 0; i < elem.length; i++) {
+        elem[i].addEventListener("click", function (event) {
+            let b = event.target;
+            document.body.style.backgroundColor = '' + b.value;
+        })
+    }
+</script>
 </body>
 </html>

@@ -6,18 +6,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Date;
-
-@WebServlet(urlPatterns = "/CurrentTime")
-public class ServerTimeOnlineServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/players")
+public class SitePlayersServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        OutputStream outputStream = resp.getOutputStream();
-        Date date = new Date();
-        resp.setContentType("text/plain");
-        outputStream.write((date.toString()).getBytes("UTF-8"));
-        outputStream.flush();
-        outputStream.close();
+        req.setCharacterEncoding("UTF-8");
+        req.getRequestDispatcher("/players.jsp").forward(req,resp);
     }
 }

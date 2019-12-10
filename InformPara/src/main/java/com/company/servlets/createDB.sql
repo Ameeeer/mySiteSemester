@@ -33,14 +33,15 @@ insert into roles(roleName)
 values ('Jesus');
 insert into roles(roleName)
 values ('Lecturer');
-delete
-from mySiteUsers
-where id >= 1;
+select * from mySiteUsers where id = 10;
+select Login,country,infoAboutUser
+from mySiteUsers order by id limit 50 offset 1;
 select * from roles join usrs_with_roles uwr on roles.id = uwr.roleID where userID = 11;
 create sequence id_seq
     minvalue 1
     cache 1
     increment 1;
+create index myIndex on mySiteUsers(id);
 alter table only mySiteUsers
     alter column id set default nextval('id_seq'::regclass);
 select Email, Login, Password
